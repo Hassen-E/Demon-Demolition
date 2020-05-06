@@ -3,7 +3,9 @@
     <CLASSES>
       <root url="file://$PATH_TO_FX$" />
     </CLASSES>
-    <JAVADOC />
+    <JAVADOC>
+      <root url="https://docs.oracle.com/javafx/2/api/" />
+    </JAVADOC>
     <NATIVE>
       <root url="file://$PATH_TO_FX$" />
     </NATIVE>

@@ -1,25 +1,57 @@
 package sample;
 
-import javafx.animation.Animation;
 import javafx.animation.FadeTransition;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
+import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 
-import java.io.File;
 import java.util.Random;
-import java.util.Timer;
-import java.util.TimerTask;
+
+import static sample.Main.demonCount;
+import static sample.Main.getScore;
 
 public class Enemy {
 
+    static Node cacodemon;
+    static Node goblin;
+    static Node lostsoul;
+
+    public static void demonSpawnOrder(Pane pane) {
+
+        Random random = new Random();
+
+        int demonId = random.nextInt(3); // corresponds with amount of demons  to start counting at 0
+
+        switch (demonId) {
+            case 0:
+                cacodemon = Enemy.renderDemon("assets/moving-Cacodemon.gif", "assets/explosion.gif");
+                Enemy.spawnLocation(cacodemon); //spawns demon in random position - May be bugged
+                pane.getChildren().add(cacodemon);
+                demonCount++;
+                break;
+            case 1:
+                goblin = Enemy.renderDemon("assets/flying-goblin.gif", "assets/explosion.gif");
+                Enemy.spawnLocation(goblin); //spawns demon in random position - May be bugged
+                pane.getChildren().add(goblin);
+                demonCount++;
+                break;
+
+            case 2:
+                lostsoul = Enemy.renderDemon("assets/lost-soul.gif", "assets/explosion.gif");
+                Enemy.spawnLocation(lostsoul); //spawns demon in random position - May be bugged
+                pane.getChildren().add(lostsoul);
+                demonCount++;
+                break;
+            default:
+                System.out.println("error @ demonSpawnOrder");
+                System.exit(-1);
+        }
+    }
 
 
     // image to other image on click
@@ -41,16 +73,17 @@ public class Enemy {
 
             // delays 300Ms before deleting the node so we can see the Explosion
             Timeline timeline = new Timeline(new KeyFrame(Duration.millis(300), ev -> {
-                Main.gameBoard.getChildren().remove(enemyGraphic);
+                Main.gamePane.getChildren().remove(enemyGraphic);// test
+
             }));
             timeline.setCycleCount(1);
             timeline.play();
 
             // add one point
-            Main.setScore(+1);
-            Main.demonCount --;
-        });
+            Main.setScore(Main.getScore() + 100);
+            demonCount --;
 
+        });
         return enemyGraphic;
     }
 
@@ -71,27 +104,12 @@ public class Enemy {
         // size of canvas
         Random random = new Random();
         /* May cause bug if demon is not size 100! */
-        int enemySpawnX = random.nextInt(Main.sceneWidth - 100); // 100 is to compensate for size of demon
-        int enemySpawnY = random.nextInt(Main.sceneHeight - 100);
+        int enemySpawnX = random.nextInt(Main.SCENE_WIDTH - 100); // 100 is to compensate for size of demon
+        int enemySpawnY = random.nextInt(Main.SCENE_HEIGHT - 100);
 
         // set position of spawn
         demon.setLayoutX(enemySpawnX);
         demon.setLayoutY(enemySpawnY);
     }
 
-    public void demonLifeSpan() {
-        // depending on difficulty demon will stay on screen:
-        // easy: 4s, med: 2s, hard: 1s
-
-
-    }
-
-    // There are to way for an enemy to "die"
-    // 1) shrink before player can click them - ^ see above
-    // 2) clicked by player -- addressed in method: die()
-
-    public void die() {
-
-
-    }
 }
