@@ -43,8 +43,6 @@ public class Game {
         gamePane = new Pane();
         gamePane.getStyleClass().add("game");
 
-        System.out.println("in game scene");
-
         setGameLoop(gamePane, mainStage);
 
         gameScene = new Scene(gamePane, SCENE_WIDTH, SCENE_HEIGHT);
@@ -55,36 +53,51 @@ public class Game {
 
     public void setGameLoop(Pane gamePaneArg, Stage mainStage) {
 
-        System.out.println("outside " + state);
 
           gameLoop = new Timeline(new KeyFrame(Duration.seconds(.7), event -> {
 
               state = STATE.GAME;
 
-              System.out.println("inside: " + state);
-
-
-              System.out.println("in game loop");
               Enemy.demonSpawnOrder(gamePaneArg);
 
-              System.out.println("demon count: " + demonCount);
+              System.out.println("DC: " + demonCount);
 
               if (demonCount >= 4) {
 
                   gameMediaPlayer.stop();
 
-                  // action when to many demons
+                  // action when too many demons
                   state = STATE.GAMEOVER;
+
+                  GameOver gameOver = new GameOver();
                   System.out.println(state);
-                  gameLoop.stop();
-                  gameOver = new GameOver();
                   mainStage.setScene(gameOver.getGameOverScene(mainStage));
-
-              } else {
-                  System.out.println("loop again");
+                  gameLoop.stop();
               }
-
           }));
           gameLoop.setCycleCount(Timeline.INDEFINITE);
+    }
+
+    void cleanup() {
+        // stop animations reset model ect.
+    }
+
+    void startGame(Stage stage) {
+        // initialisation from start method goes here
+
+        // button click sound
+        Utility.playSFX("src/assets/sound/menu-ding.wav");
+
+        // change scene to game volcano
+        stage.setScene(getGameScene(stage));
+
+        setGameLoop(gamePane, stage);
+        gameLoop.play();
+        stage.show();
+    }
+
+    void restart(Stage stage) {
+        cleanup();
+        startGame(stage);
     }
 }

@@ -27,25 +27,26 @@ public class Enemy {
 
         int demonId = random.nextInt(3); // corresponds with amount of demons  to start counting at 0
 
+        // TODO: 5/8/20 use function to preform action in switch v
         switch (demonId) {
             case 0:
                 cacodemon = Enemy.renderDemon("assets/moving-Cacodemon.gif", "assets/explosion.gif");
                 Enemy.spawnLocation(cacodemon); //spawns demon in random position - May be bugged
                 pane.getChildren().add(cacodemon);
-                demonCount++;
+                Main.setDemonCount(Main.getDemonCount() + 1);
                 break;
             case 1:
-                goblin = Enemy.renderDemon("assets/flying-goblin.gif", "assets/explosion.gif");
+                goblin = Enemy.renderDemon("assets/pizza.gif", "assets/explosion.gif");
                 Enemy.spawnLocation(goblin); //spawns demon in random position - May be bugged
                 pane.getChildren().add(goblin);
-                demonCount++;
+                Main.setDemonCount(Main.getDemonCount() + 1);
                 break;
 
             case 2:
                 lostsoul = Enemy.renderDemon("assets/lost-soul.gif", "assets/explosion.gif");
                 Enemy.spawnLocation(lostsoul); //spawns demon in random position - May be bugged
                 pane.getChildren().add(lostsoul);
-                demonCount++;
+                Main.setDemonCount(Main.getDemonCount() + 1);
                 break;
             default:
                 System.out.println("error @ demonSpawnOrder");
@@ -64,7 +65,7 @@ public class Enemy {
         enemyGraphic.setFitHeight(120);
 
         // action when enemy clicked - sets image + mouse event
-        enemyGraphic.setOnMouseClicked((MouseEvent e) -> {
+        enemyGraphic.setOnMouseClicked((MouseEvent mouseEvent) -> {
 
             enemyGraphic.setImage(new Image(endImg));
 
@@ -79,9 +80,11 @@ public class Enemy {
             timeline.setCycleCount(1);
             timeline.play();
 
-            // add one point
-            Main.setScore(Main.getScore() + 100);
-            demonCount --;
+            if(mouseEvent.getClickCount() == 1){
+                Main.setScore(Main.getScore() + 75);
+                Main.setDemonCount(Main.getDemonCount() - 1);
+            }
+
 
         });
         return enemyGraphic;

@@ -7,6 +7,8 @@ import javafx.scene.layout.*;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 
+import static sample.Game.gameLoop;
+
 /** Demon Demolition
  * @author Hassen E
  * @version 1.1 - organized code, fix scene bugs
@@ -52,17 +54,15 @@ public class Main extends Application {
 
         game = new Game();
 
-        if (state == Game.STATE.GAME) {
-            System.out.println("in game state new");
-        }
-
         // TODO: add score to GUI Gameover screen
         primaryStage.setOnCloseRequest(e -> System.out.println("score: " + score));
 
         primaryStage.setTitle("DOOM!");
-        primaryStage.setResizable(false);
+//        primaryStage.setResizable(false);
         primaryStage.show();
     }
+
+
 
     // Getters/ setters
     public static int getScore() {

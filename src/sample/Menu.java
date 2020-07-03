@@ -21,6 +21,7 @@ public class Menu extends Stage {
 
     Main main;
     Scene menuScene;
+    Media sound;
     public static Game.STATE gameState;
     MediaPlayer menuMediaPlayer;
     Game game;
@@ -41,17 +42,22 @@ public class Menu extends Stage {
         playButton.setPreserveRatio(true);
         playButton.setFitWidth(280);
 
+        // menu audio
+        sound = new Media(new File("src/assets/sound/menu-music.mp3").toURI().toString());
+        MediaPlayer menuMediaPlayer = new MediaPlayer(sound);
+        menuMediaPlayer.play();
+
+        game = new Game();
+
         // Play button action
         playButton.setOnMouseClicked((MouseEvent e) -> {
 
-            // button click sound
-            Utility.playSFX("src/assets/sound/menu-ding.wav");
+            // stop menu music
+            menuMediaPlayer.stop();
 
-            // change scene to game volcano
-            game = new Game();
-            mainStage.setScene(game.getGameScene(mainStage));
+            // function to start game
 
-            gameLoop.play();
+            game.startGame(mainStage);
 
         });
 
@@ -61,10 +67,7 @@ public class Menu extends Stage {
         layout.setAlignment(Pos.CENTER);
         layout.getChildren().addAll(title, playButton);
 
-        // menu audio
-        Media sound = new Media(new File("src/assets/sound/menu-music.mp3").toURI().toString());
-        MediaPlayer menuMediaPlayer = new MediaPlayer(sound);
-        menuMediaPlayer.play();
+
 
         menuScene = new Scene(layout, SCENE_WIDTH, SCENE_HEIGHT);
         menuScene.getStylesheets().add("sample/style.css");

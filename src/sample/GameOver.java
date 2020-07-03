@@ -66,8 +66,8 @@ public class GameOver {
             // change scene to game volcano
 //            game = new Game();
 //            mainStage.setScene(game.getGameScene(mainStage));
-//
-//            gameLoop.play();
+
+            gameLoop.play();
 
         });
 
