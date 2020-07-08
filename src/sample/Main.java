@@ -19,7 +19,7 @@ public class Main extends Application {
     public static final int SCENE_HEIGHT = 600;
     public static int score = 0;
     public static boolean gameOver = false;
-    public static int spawnSpeed;
+    public static double spawnSpeed = .9;
     public static int demonCount = 0; // number of demons on map
 
     public static Pane gamePane;
@@ -73,7 +73,7 @@ public class Main extends Application {
         Main.score = score;
     }
 
-    public static int getSpawnSpeed() {
+    public static double getSpawnSpeed() {
         return spawnSpeed;
     }
 

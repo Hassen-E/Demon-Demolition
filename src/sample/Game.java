@@ -54,7 +54,7 @@ public class Game {
     public void setGameLoop(Pane gamePaneArg, Stage mainStage) {
 
 
-          gameLoop = new Timeline(new KeyFrame(Duration.seconds(.7), event -> {
+          gameLoop = new Timeline(new KeyFrame(Duration.seconds(.6), event -> {
 
               state = STATE.GAME;
 
